@@ -31,33 +31,40 @@ class RecordSoundVC: UIViewController, AVAudioRecorderDelegate {
         
     }
     
-    //Start recording button 
-    @IBAction func startRecording(_ sender: Any) {
-        stopRecordingBtn.isEnabled = true
-        recordingLabel.text = "Recording"
-        startRecordingBtn.isEnabled = false
-        
-        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-        let recordingName = "recordedVoice.wav"
-        let pathArray = [dirPath, recordingName]
+    // creating file & preparing audio
+    
+    func createAudio() {
+        let folderPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let recordingFileName = "recordedVoice.wav"
+        let pathArray = [folderPath, recordingFileName]
         
         let filePath = URL(string: pathArray.joined(separator: "/"))
         
         let session = AVAudioSession.sharedInstance()
         
-       try! session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.defaultToSpeaker)
+        try! session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.defaultToSpeaker)
         
         try! audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])
         audioRecorder.delegate = self
         audioRecorder.isMeteringEnabled = true
         audioRecorder.prepareToRecord()
         audioRecorder.record()
+    }
+    
+    //Start recording button 
+    @IBAction func startRecording(_ sender: Any) {
+        stopRecordingBtn.isEnabled = true
+        recordingLabel.text = "Recording"
+        startRecordingBtn.isEnabled = false
+        
+        createAudio()
         
     }
     
     //Stop recording button
     @IBAction func stopRecording(_ sender: Any) {
         audioRecorder.stop()
+        recordingLabel.text = "Tap to Record"
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
 

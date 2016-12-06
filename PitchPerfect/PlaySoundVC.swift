@@ -27,7 +27,7 @@ class PlaySoundVC: UIViewController {
     var audioPlayerNode: AVAudioPlayerNode!
     var stopTimer: Timer!
     
-    enum ButtonType: Int {
+    enum SoundType: Int {
         case slow = 0, fast, chipmunk, vader, echo, reverb
     }
 
@@ -54,7 +54,7 @@ class PlaySoundVC: UIViewController {
    
     @IBAction func playSoundButton(_ sender: UIButton) {
         
-        switch(ButtonType(rawValue: sender.tag)!) {
+        switch(SoundType(rawValue: sender.tag)!) {
         case .slow:
             playSound(rate: 0.5)
         case .fast:
