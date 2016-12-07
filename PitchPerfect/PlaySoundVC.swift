@@ -21,6 +21,7 @@ class PlaySoundVC: UIViewController {
     
     
     
+    
     var recordedAudioURL:URL!
     var audioFile:AVAudioFile!
     var audioEngine:AVAudioEngine!
@@ -36,14 +37,13 @@ class PlaySoundVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAudio()
-        
-     
-}
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        stopButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
         configureUI(.notPlaying)
     }
 
