@@ -19,8 +19,7 @@ class PlaySoundVC: UIViewController {
     @IBOutlet weak var reverbButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
-    
-    
+    var buttonOutlets: [UIButton] = [UIButton]()
     
     var recordedAudioURL:URL!
     var audioFile:AVAudioFile!
@@ -32,18 +31,21 @@ class PlaySoundVC: UIViewController {
         case slow = 0, fast, chipmunk, vader, echo, reverb
     }
 
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAudio()
+        
+        self.buttonOutlets = [self.snailButton, self.chipmunkButton, self.rabbitButton, self.vaderButton, self.echoButton, self.reverbButton, self.stopButton]
     }
     
     
+    func applyImageContentMode(){
+        for buttonImage in buttonOutlets {buttonImage.imageView?.contentMode = UIViewContentMode.scaleAspectFit}
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        stopButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        applyImageContentMode()
         configureUI(.notPlaying)
     }
 
